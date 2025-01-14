@@ -34,24 +34,22 @@ function renderGuests() {
     guestList.appendChild(card);
   });
 }
-  function checkRoomAvailability(room) {
-  return guest.some((g) => {
-    g.room === room;
-  });
+  function
+  checkRoomAvailability(room) {
+  return guest.some((g) => 
+    g.room === room);
 }
-
-
 // Create the  form submission event listener
 document.getElementById('checkInForm').addEventListener('submit',addGuest);
   function addGuest(event) {
 
     event.preventDefault();
+    console.log("tesst");
     // Get form values.
     const name = document.getElementById('guestName').value;
-    const room = document.getElementById('roomNumber').value;
-    const duration = document.getElementById('stayDuration').value;
+    const room = document.getElementById('assignedRoom').value;
+    const duration = document.getElementById('reservationPeriod').value;
     const errorMessage = document.getElementById('errorMessage');
-    console.log(name, room, duration, errorMessage)
     
     // Check if all fields are filled out.
     if (!name === '' || !room === '' || !duration === '') {
@@ -59,17 +57,15 @@ document.getElementById('checkInForm').addEventListener('submit',addGuest);
       errorMessage.style.display = 'block';
       return;
     }
-
     // Check if room is already assigned
-    if (checkRoomAvailability(room)) {
-
+    if (checkRoomAvailability(room)) 
+    {
       errorMessage.textContent = 'Room is already assigned. Choose another one.';
       errorMessage.style.display = 'block';
       return;
     } else {
       errorMessage.style.display = 'none';
     }
-
     // Add new guest to the guest array.
     guest.push(new Guest(name, room, duration));
 
@@ -77,6 +73,6 @@ document.getElementById('checkInForm').addEventListener('submit',addGuest);
     renderGuests();
     // clear form imputs
     document.getElementById('checkInForm').reset();
-  });
+  }
 
 renderGuests();
