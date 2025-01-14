@@ -20,7 +20,7 @@ function renderGuests() {
   const guestList = document.getElementById('guestList');
   guestList.innerHTML = '';// clear existing content 
 
-  guests.forEach((g) => {
+  guest.forEach((g) => {
     const card = document.createElement('div');
     card.className = 'col-md-4';
     card.innerHTML = `  
@@ -35,18 +35,24 @@ function renderGuests() {
   });
 }
   function checkRoomAvailability(room) {
-  return guest.some (g) =>  guest.room === room;
+  return guest.some((g) => {
+    g.room === room;
+  });
 }
+
+
 // Create the  form submission event listener
-document.getElementById('checkInForm').addEventListener('submit',
-  function (event) {
+document.getElementById('checkInForm').addEventListener('submit',addGuest);
+  function addGuest(event) {
+
     event.preventDefault();
     // Get form values.
     const name = document.getElementById('guestName').value;
     const room = document.getElementById('roomNumber').value;
     const duration = document.getElementById('stayDuration').value;
     const errorMessage = document.getElementById('errorMessage');
-
+    console.log(name, room, duration, errorMessage)
+    
     // Check if all fields are filled out.
     if (!name === '' || !room === '' || !duration === '') {
       errorMessage.textContent = 'Please fill out all fields.';
@@ -63,14 +69,12 @@ document.getElementById('checkInForm').addEventListener('submit',
     } else {
       errorMessage.style.display = 'none';
     }
-    return true;  // room is available.
 
     // Add new guest to the guest array.
     guest.push(new Guest(name, room, duration));
 
     // Render updated guest list.
     renderGuests();
-    return false; // Prevent form submission.
     // clear form imputs
     document.getElementById('checkInForm').reset();
   });
